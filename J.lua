@@ -19,6 +19,7 @@ local UICorner7 = Instance.new("UICorner")
 local UICorner8 = Instance.new("UICorner")
 local UICorner9 = Instance.new("UICorner")
 local UICorner10 = Instance.new("UICorner")
+local UICorner11 = Instance.new("UICorner")
 local Open = Instance.new("TextButton")
 local Close = Instance.new("TextButton")
 local InfAmmo = Instance.new("TextButton")
@@ -30,6 +31,7 @@ local Xray = Instance.new("TextButton")
 local bright = Instance.new("TextButton")
 local Infjump = Instance.new("TextButton")
 local TextLabel = Instance.new("TextLabel")
+local SilentAim = Instance.new("TextButton")
 
 
 --Properties:
@@ -74,6 +76,7 @@ UICorner7.Parent = Hitbox
 UICorner8.Parent = Xray
 UICorner9.Parent = bright
 UICorner10.Parent = Infjump
+UICorner11.Parent = SilentAim
 
 Open.Name = "Open"
 Open.Parent = V1
@@ -156,15 +159,14 @@ local Mods = {
     ["MuzzleFlashSize0"] = 0,
     ["MuzzleFlashSize1"] = 0,
     ["FlashBrightness"] = 0,
-    ["AmmoCapacity"] = 1,
+    ["AmmoCapacity"] = math.huge,
     ["ShotCooldown"] = 0,
-    ["CurrentAmmo"] = 1,
+    ["CurrentAmmo"] = math.huge,
     ["BulletSpeed"] = 9e9,
     ["FireMode"] = "Automatic",
     ["GravityFactor"] = 0,
     ["MaxSpread"] = 0,
     ["MinSpread"] = 0,
-    ["HitDamage"] = 4000,
     ["NumProjectiles"] = 1,
     -- Melee (Shovel, Sword, etc)
     ["Cooldown"] = 0,
@@ -480,6 +482,85 @@ _G.FullBrightExecuted = true
 _G.FullBrightEnabled = not _G.FullBrightEnabled
 end)
 
+SilentAim.Name = "SilentAim"
+SilentAim.Parent = main
+SilentAim.AnchorPoint = Vector2.new(0.9, 0)
+SilentAim.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+SilentAim.Position = UDim2.new(0.27, 0, 0.6, 0)
+SilentAim.Size = UDim2.new(0, 40, 0, 25)
+SilentAim.Font = Enum.Font.SourceSans
+SilentAim.Text = "SilentAim"
+SilentAim.TextColor3 = Color3.fromRGB(255, 255, 255)
+SilentAim.TextSize = 11.000
+SilentAim.TextWrapped = true
+SilentAim.MouseButton1Down:Connect(function()
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+local Closest
+
+local isAlive = function()
+   if not Player.Character then return false end
+   if not Player.Character:FindFirstChild("HumanoidRootPart") then return false end
+   if not Player.Character:FindFirstChild("Humanoid") then return false end
+   if Player.Character.Humanoid.Health <= 0 then return false end
+   return true
+end
+
+local function getClosest()
+   if not isAlive() then return end
+
+   local closest = nil;
+   local distance = 700;
+
+   for i, v in pairs(Players:GetPlayers()) do
+       if v == Player then continue end
+       if v.Team == Player.Team then continue end
+       if not v.Character then continue end
+       if not v.Character:FindFirstChildOfClass("Humanoid") then continue end
+
+       local d = (v.Character.HumanoidRootPart.Position - Player.Character.HumanoidRootPart.Position).Magnitude
+
+       if d < distance then
+           distance = d
+           closest = v
+       end
+   end
+
+   return closest
+end
+
+RunService.RenderStepped:Connect(function(deltaTime)
+   Closest = getClosest()
+end)
+
+local old; old = hookmetamethod(game, "__namecall", function(this, ...)
+   local args = {...}
+   local method = getnamecallmethod()
+
+   if not checkcaller() and method == "FireServer" and tostring(this) == "WeaponHit" then
+       if Closest then
+           args[2]["part"] = Closest.Character.Head
+           args[2]["h"] = Closest.Character.Head
+       end
+   end
+
+   return old(this, unpack(args))
+end)
+
+local to0 = {"HeadshotCooldown"}
+
+-- retarded gun mods (re-equip your weapon)
+local old2; old2 = hookmetamethod(game, "__index", function(this, index)
+   if not checkcaller() and index == "Value" then
+       if table.find(to0, tostring(this)) then
+           return 0
+       end
+   end
+   return old2(this, index)
+   end)
+end)
+
 Infjump.Name = "Infjump"
 Infjump.Parent = main
 Infjump.AnchorPoint = Vector2.new(0.9, 0)
@@ -552,44 +633,3 @@ local function SPNLPQB_fake_script() -- Infjump.Script
 	end)
 end
 coroutine.wrap(SPNLPQB_fake_script)()
-
-local FPSFrame = Instance.new("Frame")
-local TextLabel = Instance.new("TextLabel")
-
-FPSFrame.Name = "FPSFrame"
-FPSFrame.Parent = main
-FPSFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-FPSFrame.BackgroundTransparency = 1.000
-FPSFrame.Position = UDim2.new(0.17, 0, 0.7, 0)
-FPSFrame.Size = UDim2.new(0, 119, 0, 25)
-
-TextLabel.Parent = FPSFrame
-TextLabel.Position = UDim2.new(0.225921139, 0, 0.29052633, 0)
-TextLabel.BackgroundTransparency = 1.000
-TextLabel.Size = UDim2.new(0, 64, 0, 10)
-TextLabel.Font = Enum.Font.SourceSans
-TextLabel.Text = "FPS:"
-TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.TextSize = 24.000
-TextLabel.TextWrapped = true
-
-local function VYNYAI_fake_script()
-	local script = Instance.new('LocalScript', TextLabel)
-	
-	local RS = game:GetService("RunService")
-
-	local frames = 0
-
-	
-	RS.RenderStepped:Connect(function()
-		frames = frames + 1
-	end)
-
-	
-	while wait(1) do
-		script.Parent.Text = "FPS: " .. frames
-		frames = 0
-	end
-end
-
-coroutine.wrap(VYNYAI_fake_script)()
