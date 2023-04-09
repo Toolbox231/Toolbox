@@ -20,6 +20,7 @@ local UICorner8 = Instance.new("UICorner")
 local UICorner9 = Instance.new("UICorner")
 local UICorner10 = Instance.new("UICorner")
 local UICorner11 = Instance.new("UICorner")
+local UICorner12 = Instance.new("UICorner")
 local Open = Instance.new("TextButton")
 local Close = Instance.new("TextButton")
 local InfAmmo = Instance.new("TextButton")
@@ -32,6 +33,7 @@ local bright = Instance.new("TextButton")
 local Infjump = Instance.new("TextButton")
 local TextLabel = Instance.new("TextLabel")
 local SilentAim = Instance.new("TextButton")
+local Tpme = Instance.new("TextButton")
 
 
 --Properties:
@@ -77,6 +79,7 @@ UICorner8.Parent = Xray
 UICorner9.Parent = bright
 UICorner10.Parent = Infjump
 UICorner11.Parent = SilentAim
+UICorner12.Parent = Tpme
 
 Open.Name = "Open"
 Open.Parent = V1
@@ -119,7 +122,7 @@ Title.BorderSizePixel = 0
 Title.Position = UDim2.new(0.25, 0, 0.005, 0)
 Title.Size = UDim2.new(0.2, 0, 0.2, 0)
 Title.Font = Enum.Font.SourceSans
-Title.Text = "Flag "
+Title.Text = " Flag "
 Title.TextColor3 = Color3.fromRGB(0, 0, 255)
 Title.TextSize = 23.000
 
@@ -131,7 +134,7 @@ Title2.BorderSizePixel = 0
 Title2.Position = UDim2.new(0.51, 0, 0.005, 0)
 Title2.Size = UDim2.new(0.2, 0, 0.2, 0)
 Title2.Font = Enum.Font.SourceSans
-Title2.Text = "Wars"
+Title2.Text = " Wars "
 Title2.TextColor3 = Color3.fromRGB(255, 0, 0)
 Title2.TextSize = 23.000
 
@@ -143,10 +146,9 @@ InfAmmo.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 InfAmmo.Position = UDim2.new(0.27, 0, 0.2, 0)
 InfAmmo.Size = UDim2.new(0, 40, 0, 25)
 InfAmmo.Font = Enum.Font.SourceSans
-InfAmmo.Text = "Weapon "
+InfAmmo.Text = " Weapon "
 InfAmmo.TextColor3 = Color3.fromRGB(255, 255, 255)
 InfAmmo.TextSize = 14.000
-InfAmmo.TextWrapped = true
 InfAmmo.MouseButton1Down:Connect(function()
 local mt = getrawmetatable(game)
 setreadonly(mt, false)
@@ -193,10 +195,9 @@ Esp.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 Esp.Position = UDim2.new(0.57, 0, 0.2, 0)
 Esp.Size = UDim2.new(0, 40, 0, 25)
 Esp.Font = Enum.Font.SourceSans
-Esp.Text = "Esp "
+Esp.Text = " Esp "
 Esp.TextColor3 = Color3.fromRGB(255, 255, 255)
 Esp.TextSize = 14.000
-Esp.TextWrapped = true
 Esp.MouseButton1Down:Connect(function()
 local currPlayer = game:GetService("Players").LocalPlayer
 local servPlayer = game:GetService("Players")
@@ -295,10 +296,9 @@ Hitbox.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 Hitbox.Position = UDim2.new(0.87, 0, 0.2, 0)
 Hitbox.Size = UDim2.new(0, 40, 0, 25)
 Hitbox.Font = Enum.Font.SourceSans
-Hitbox.Text = "Hitbox "
+Hitbox.Text = " Hitbox "
 Hitbox.TextColor3 = Color3.fromRGB(255, 255, 255)
 Hitbox.TextSize = 14.000
-Hitbox.TextWrapped = true
 Hitbox.MouseButton1Down:Connect(function()
 local currPlayer = game:GetService("Players").LocalPlayer
 local servPlayer = game:GetService("Players")
@@ -357,10 +357,9 @@ Xray.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 Xray.Position = UDim2.new(0.27, 0, 0.4, 0)
 Xray.Size = UDim2.new(0, 40, 0, 25)
 Xray.Font = Enum.Font.SourceSans
-Xray.Text = "Xray "
+Xray.Text = " Xray "
 Xray.TextColor3 = Color3.fromRGB(255, 255, 255)
 Xray.TextSize = 14.000
-Xray.TextWrapped = true
 
 bright.Name = "bright"
 bright.Parent = main
@@ -369,10 +368,9 @@ bright.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 bright.Position = UDim2.new(0.57, 0, 0.4, 0)
 bright.Size = UDim2.new(0, 40, 0, 25)
 bright.Font = Enum.Font.SourceSans
-bright.Text = "Fullbright"
+bright.Text = " Fullbright "
 bright.TextColor3 = Color3.fromRGB(255, 255, 255)
-bright.TextSize = 14.000
-bright.TextWrapped = true
+bright.TextSize = 13.000
 bright.MouseButton1Click:Connect(function()
 if not _G.FullBrightExecuted then
 
@@ -489,11 +487,10 @@ SilentAim.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 SilentAim.Position = UDim2.new(0.27, 0, 0.6, 0)
 SilentAim.Size = UDim2.new(0, 40, 0, 25)
 SilentAim.Font = Enum.Font.SourceSans
-SilentAim.Text = "SilentAim "
+SilentAim.Text = " SilentAim "
 SilentAim.TextColor3 = Color3.fromRGB(255, 255, 255)
 SilentAim.TextSize = 11.000
-SilentAim.TextWrapped = true
-SilentAim.MouseButton1Down:Connect(function()
+SilentAim.MouseButton1Click:Connect(function()
 local Players = game:GetService("Players")
 local Player = Players.LocalPlayer
 local RunService = game:GetService("RunService")
@@ -561,6 +558,39 @@ local old2; old2 = hookmetamethod(game, "__index", function(this, index)
    end)
 end)
 
+Tpme.Name = "Tpme"
+Tpme.Parent = main
+Tpme.AnchorPoint = Vector2.new(0.9, 0)
+Tpme.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+Tpme.Position = UDim2.new(0.57, 0, 0.6, 0)
+Tpme.Size = UDim2.new(0, 40, 0, 25)
+Tpme.Font = Enum.Font.SourceSans
+Tpme.Text = "Tp to me"
+Tpme.TextColor3 = Color3.fromRGB(255, 255, 255)
+Tpme.TextSize = 14.000
+Tpme.MouseButton1Down:Connect(function()
+local currPlayer = game:GetService("Players").LocalPlayer
+    local servPlayer = game:GetService("Players")
+    local teams = game:GetService("Teams")
+    
+    function isSameTeam(player)
+        if player.team ~= currPlayer.team and player.team ~= teams["Neutral"] then
+            return false
+        else
+            return true
+        end
+    end
+
+    while task.wait() do
+    for _, v in next, servPlayer:GetPlayers() do
+        if v ~= currPlayer and not isSameTeam(v) then
+            print(v)
+            v.Character.HumanoidRootPart.CFrame = currPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(2.2,0.5,-5)
+        end
+    end
+    end
+end)
+
 Infjump.Name = "Infjump"
 Infjump.Parent = main
 Infjump.AnchorPoint = Vector2.new(0.9, 0)
@@ -568,10 +598,9 @@ Infjump.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 Infjump.Position = UDim2.new(0.87, 0, 0.4, 0)
 Infjump.Size = UDim2.new(0, 40, 0, 25)
 Infjump.Font = Enum.Font.SourceSans
-Infjump.Text = "Infjump "
+Infjump.Text = " Infjump "
 Infjump.TextColor3 = Color3.fromRGB(255, 255, 255)
 Infjump.TextSize = 14.000
-Infjump.TextWrapped = true
 
 local function CKAW_fake_script() -- Xray.Script 
 	local script = Instance.new('Script', Xray)
