@@ -3,13 +3,13 @@ local RunService = game:GetService("RunService")
 RunService.RenderStepped:Connect(function()
     for i, v in pairs(game:GetService("Workspace").Interactables.MorphTriggers:GetChildren()) do 
         if v.Name == "CreepyToilet_Spider" or v.Name == "Toilet_Sus" or v.Name == "Toilet_Robot" or v.Name == "President_Toilet" or v.Name == "Smiley_Toilet" or v.Name == "Toilet_King" or v.Name == "Grandpa_Toilet" or v.Name == "Angel_Toilet" or v.Name == "Toilet_SuperheroKid" or v.Name == "Green_Toilet" or v.Name == "Helicopter_Toilet" or v.Name == "Skibidi_Toilet" or v.Name == "Discoman" or v.Name == "CameraMan_Big" or v.Name == "Toilet_Voxel" or v.Name == "CameraDude" or v.Name == "Ogre_Toilet" or v.Name == "Crazy_Toilet" or v.Name == "Glitched_Toilet" or v.Name == "LongNeck_Toilet" then
-            if not v:FindFirstChild("ESP") then
-                local BillboardGui = Instance.new("BillboardGui", v)
-                BillboardGui.Size = UDim2.new(1, 0, 1, 0)
-                BillboardGui.AlwaysOnTop = true
-                BillboardGui.LightInfluence = 0
+            if not v:FindFirstChild("K") then
+                local B = Instance.new("BillboardGui", v)
+                B.Size = UDim2.new(1, 0, 1, 0)
+                B.AlwaysOnTop = true
+                B.LightInfluence = 0
 
-                local distanceLabel = Instance.new("TextLabel", BillboardGui)
+                local distanceLabel = Instance.new("TextLabel", B)
                 distanceLabel.Name = "distanceLabel"
                 distanceLabel.Size = UDim2.new(1, 0, 1, 0)
                 distanceLabel.BackgroundTransparency = 1
@@ -20,12 +20,12 @@ RunService.RenderStepped:Connect(function()
                 distanceLabel.TextStrokeTransparency = 0
                 distanceLabel.TextYAlignment = Enum.TextYAlignment.Bottom
                 distanceLabel.Text = v.Name
-                distanceLabel.Parent = BillboardGui
+                distanceLabel.Parent = B
 
                 local Highlight = Instance.new("Highlight", v)
                 Highlight.Adornee = v
                 Highlight.Parent = v
-                Highlight.Name = "ESP"
+                Highlight.Name = "K"
                 Highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
                 Highlight.FillColor = Color3.new(255,183,0)
                 Highlight.Transparency = 0.8
