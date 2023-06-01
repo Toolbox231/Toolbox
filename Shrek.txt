@@ -1,0 +1,35 @@
+local RunService = game:GetService("RunService")
+
+RunService.RenderStepped:Connect(function()
+    for i, v in pairs(game:GetService("Workspace").Interactables.MorphTriggers:GetChildren()) do 
+        if v.Name == "CreepyToilet_Spider" or v.Name == "Toilet_Sus" or v.Name == "Toilet_Robot" or v.Name == "President_Toilet" or v.Name == "Smiley_Toilet" or v.Name == "Toilet_King" or v.Name == "Grandpa_Toilet" or v.Name == "Angel_Toilet" or v.Name == "Toilet_SuperheroKid" or v.Name == "Green_Toilet" or v.Name == "Helicopter_Toilet" or v.Name == "Skibidi_Toilet" or v.Name == "Discoman" or v.Name == "CameraMan_Big" or v.Name == "Toilet_Voxel" or v.Name == "CameraDude" or v.Name == "Ogre_Toilet" or v.Name == "Crazy_Toilet" or v.Name == "Glitched_Toilet" or v.Name == "LongNeck_Toilet" then
+            if not v:FindFirstChild("ESP") then
+                local BillboardGui = Instance.new("BillboardGui", v)
+                BillboardGui.Size = UDim2.new(1, 0, 1, 0)
+                BillboardGui.AlwaysOnTop = true
+                BillboardGui.LightInfluence = 0
+
+                local distanceLabel = Instance.new("TextLabel", BillboardGui)
+                distanceLabel.Name = "distanceLabel"
+                distanceLabel.Size = UDim2.new(1, 0, 1, 0)
+                distanceLabel.BackgroundTransparency = 1
+                distanceLabel.Font = Enum.Font.SourceSansBold
+                distanceLabel.FontSize = Enum.FontSize.Size10
+                distanceLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+                distanceLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+                distanceLabel.TextStrokeTransparency = 0
+                distanceLabel.TextYAlignment = Enum.TextYAlignment.Bottom
+                distanceLabel.Text = v.Name
+                distanceLabel.Parent = BillboardGui
+
+                local Highlight = Instance.new("Highlight", v)
+                Highlight.Adornee = v
+                Highlight.Parent = v
+                Highlight.Name = "ESP"
+                Highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+                Highlight.FillColor = Color3.new(255,183,0)
+                Highlight.Transparency = 0.8
+            end
+        end
+    end
+end)
