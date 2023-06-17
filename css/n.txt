@@ -1,10 +1,3 @@
-spawn(function()
-local folder = game.Workspace.Interactables.MorphTriggers
-
-for _, file in pairs(folder:GetChildren()) do
-    file.Name = "1212"
-end
-end)
 crashy = true
 on = false
 if game.CoreGui:FindFirstChild('gui') then
@@ -104,8 +97,6 @@ Close.MouseButton1Down:Connect(function()
 main.Visible = false
 Close.Visible = false
 Open.Visible = true
-V1:Destroy()
-gui:Destroy()
 end)
 
 Title.Name = "Title"
@@ -195,30 +186,30 @@ Esp1.MouseButton1Click:Connect(function()
     if toggle then
         Esp1.Text = "Esp Toilet On"
         -- включить ESP код
-        for i, v in pairs(game:GetService("Workspace").Interactables.MorphTriggers:GetChildren()) do
-            if v.Name == "1212" then
-                if not v:FindFirstChild("HighlightBoxHandleAdornment") then
-                    local HighlightBoxHandleAdornment = Instance.new("BoxHandleAdornment")
-                    HighlightBoxHandleAdornment.Name = "HighlightBoxHandleAdornment"
-                    HighlightBoxHandleAdornment.Adornee = v
-                    HighlightBoxHandleAdornment.Size = Vector3.new(2, 2, 2)
-                    HighlightBoxHandleAdornment.AlwaysOnTop = true
-                    HighlightBoxHandleAdornment.Color3 = Color3.fromRGB(255, 215, 0) -- золотой цвет
-                    HighlightBoxHandleAdornment.Transparency = 0.2
-                    HighlightBoxHandleAdornment.ZIndex = 10
-                    HighlightBoxHandleAdornment.Parent = v
-                end
-            end
-        end
-    else
-        Esp1.Text = "Esp Toilet Off"
-        -- отключить ESP код
-        for i, v in pairs(game:GetService("Workspace").Interactables.MorphTriggers:GetChildren()) do
-            if v:FindFirstChild("HighlightBoxHandleAdornment") then
-                v:FindFirstChild("HighlightBoxHandleAdornment"):Destroy()
+for _, object in ipairs(game.Workspace.Interactables.MorphTriggers:GetDescendants()) do
+        if object:IsA("BasePart") then
+            if not object:FindFirstChild("BoxHandleAdornment") then -- Проверяем, есть ли у объекта уже дочерний элемент BoxHandleAdornment
+                local esp = Instance.new("BoxHandleAdornment")
+                esp.Name = "BoxHandleAdornment"
+                esp.Adornee = object
+                esp.AlwaysOnTop = true
+                esp.ZIndex = 5
+                esp.Size = Vector3.new(2, 2, 2)
+                esp.Color3 = Color3.fromRGB(255, 215, 0)
+                esp.Transparency = 0.2
+                esp.Parent = object
             end
         end
     end
+    else
+        Esp1.Text = "Esp Toilet Off"
+        -- отключить ESP код
+        for _, object in ipairs(game.Workspace.Interactables.MorphTriggers:GetDescendants()) do
+        if object:FindFirstChild("BoxHandleAdornment") then -- Проверяем, есть ли у объекта дочерний элемент BoxHandleAdornment
+            object.BoxHandleAdornment:Destroy()
+        end
+    end
+end
 end)
 
 Destroy.Name = "Destroy"
@@ -251,27 +242,24 @@ Farm.Text = " Farm Morphs "
 Farm.TextColor3 = Color3.fromRGB(255, 255, 255)
 Farm.TextSize = 10.000
 Farm.MouseButton1Click:Connect(function()
-for i,v in pairs(game:GetDescendants()) do
-if v.Name == '1212' then
-v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-end
-end
+local player = game.Players.LocalPlayer
 
-for _, folder in pairs(game.Workspace.Interactables.MorphTriggers:GetChildren()) do
-    if folder.Name == "1212" then
-        if folder:FindFirstChild("PointLight") then
-            folder.PointLight:Destroy()
-        end
+for _, trigger in ipairs(game.Workspace.Interactables.MorphTriggers:GetDescendants()) do
+    if trigger:IsA("BasePart") then
+        trigger.CFrame = player.Character.HumanoidRootPart.CFrame
     end
 end
 
-local morphTriggersFolder = game.Workspace.Interactables.MorphTriggers
+for _, folder in pairs(game.Workspace.Interactables.MorphTriggers:GetChildren()) do
+    if folder:FindFirstChild("PointLight") then
+        folder.PointLight:Destroy()
+    end
+end
 
-for _, trigger in ipairs(morphTriggersFolder:GetChildren()) do
-    if trigger.Name == "1212" then
-        trigger.CanCollide = false
+for _, trigger in ipairs(game.Workspace.Interactables.MorphTriggers:GetDescendants()) do
+    if trigger:IsA("BasePart") then
         trigger.Size = Vector3.new(0, 0, 0)
-        trigger.Transparency = 1
+        trigger.CanCollide = false
     end
 end
 end)
